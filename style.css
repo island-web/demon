@@ -1,0 +1,198 @@
+@import 'https://fonts.googleapis.com/css?family=Inconsolata';
+
+html {
+    min-height: 100%;
+}
+
+
+body {
+    box-sizing: border-box;
+    height: 100%;
+    background-color: #000000;
+    background-image: radial-gradient(#11581E, #041607), url("https://media.giphy.com/media/oEI9uBYSzLpBK/giphy.gif");
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: "Inconsolata", Helvetica, sans-serif;
+    font-size: 1.5rem;
+    color: rgba(128, 255, 128, 0.8);
+    text-shadow: 0 0 1ex #33ff33, 0 0 2px rgba(255, 255, 255, 0.8);
+    margin: 0;
+   
+}
+
+.noise {
+    pointer-events: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url("https://media.giphy.com/media/oEI9uBYSzLpBK/giphy.gif");
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: -1;
+    opacity: 0.02;
+}
+
+.overlay {
+    pointer-events: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(180deg, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0) 100%);
+    background-size: auto 4px;
+    z-index: 1;
+    /* MY*/
+    text-align: center;
+}
+
+.overlay::before {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(0deg, transparent 0%, rgba(32, 128, 32, 0.2) 2%, rgba(32, 128, 32, 0.8) 3%, rgba(32, 128, 32, 0.2) 3%, transparent 100%);
+    background-repeat: no-repeat;
+    -webkit-animation: scan 7.5s linear 0s infinite;
+    animation: scan 7.5s linear 0s infinite;
+}
+
+@-webkit-keyframes scan {
+    0% {
+        background-position: 0 -100vh;
+    }
+
+    35%,
+    100% {
+        background-position: 0 100vh;
+    }
+}
+
+@keyframes scan {
+    0% {
+        background-position: 0 -100vh;
+    }
+
+    35%,
+    100% {
+        background-position: 0 100vh;
+    }
+}
+
+.terminal {
+    box-sizing: inherit;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    max-width: 100%;
+    padding: 2rem;
+    text-transform: uppercase;
+}
+
+.output {
+    color: rgba(128, 255, 128, 0.8);
+    text-shadow: 0 0 1px rgba(51, 255, 51, 0.4), 0 0 2px rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+    font-size: 1rem;
+    font-family: monospace, Consolas;
+
+}
+
+.output-activ {
+    color: rgba(128, 255, 128, 0.8);
+    text-shadow: 0 0 1px rgba(51, 255, 51, 0.4), 0 0 2px rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+    font-family: monospace, Consolas;
+
+}
+
+/*=================ALL MY SETTINGS==================*/
+.container {
+    max-width: 100%;
+}
+
+.head-deff {
+    font-size: 1rem;
+    margin-top: 5px;
+    font-family: monospace, Consolas;
+    text-align: inherit;
+    color: #33ff33;
+}
+
+::-webkit-scrollbar {
+    color: red;
+}
+
+#info_space {
+    overflow: scroll;
+    height: inherit;
+    overflow-x: hidden;
+}
+
+.p-info-install {
+    font-size: 1rem;
+    margin: 1%;
+    color: white;
+}
+
+.p-info-content {
+    font-size: 1rem;
+    margin: 1%;
+    color: rgb(0, 255, 64);
+}
+
+.date,
+.time {
+    font-size: 1rem;
+    margin-right: 2%;
+    color: rgb(0, 255, 85);
+    font-family: monospace, Consolas;
+}
+
+.p-info-install-warning {
+    font-size: 1rem;
+    margin: 1%;
+}
+
+.p-info-error {
+    font-size: 1rem;
+    margin: 1%;
+    color: red;
+}
+
+.btn-header {
+    color: #11581e;
+    text-decoration: none;
+}
+
+.btn-header:hover {
+    color: #33ff33;
+    cursor: pointer;
+}
+
+.info-space {
+    background: #00000082;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 8px;
+    background-color: #33ff33;
+
+
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #041607;
+    box-shadow: inset 0px 0px 0px #00fb2a;
+
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #253861;
+}
+

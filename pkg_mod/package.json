@@ -1,0 +1,28 @@
+{
+  "name": "process_manager_demon_84",
+  "productName": "TMM Player",
+  "version": "3.0.5",
+  "description": "Wathc, start, reload, update, download, parent of all processes",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Den Lupandin",
+  "license": "ISC",
+  "dependencies": {
+    "adm-zip": "^0.5.10",
+    "child_process": "^1.0.2",
+    "chokidar": "^3.5.3",
+    "fs-extra": "^11.1.1",
+    "moment": "^2.29.4",
+    "moment-timezone": "^0.5.43",
+    "node-cron": "^3.0.2",
+    "node-notifier": "^10.0.1",
+    "node-schedule": "^2.1.1",
+    "nodejs-file-downloader": "^4.12.1",
+    "pm2": "^5.3.0",
+    "shelljs": "^0.8.5",
+    "socket.io-client": "^4.7.2",
+    "systeminformation": "^5.18.15"
+  }
+}
