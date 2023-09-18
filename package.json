@@ -1,0 +1,62 @@
+{
+  "name": "tmm-player",
+  "productName": "TMM Player (demon - 84)",
+  "version": "3.0.0",
+  "description": "Wathc, start, reload, update, download, parent of all processes",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": {
+    "name": "Den Lupandin",
+    "email": "island.web.studio@gmail.com"
+  },
+  "license": "ISC",
+  "homepage": "https://web-island.space",
+  "icon": "img/icon.png",
+  "dependencies": {
+    "adm-zip": "^0.5.10",
+    "chokidar": "^3.5.3",
+    "cron": "^2.4.1",
+    "electron-squirrel-startup": "^1.0.0",
+    "fs-extra": "^11.1.1",
+    "moment": "^2.29.4",
+    "moment-timezone": "^0.5.43",
+    "nodejs-file-downloader": "^4.12.1",
+    "pm2": "^5.3.0",
+    "shelljs": "^0.8.5"
+  },
+  "devDependencies": {
+    "electron": "^22.3.21",
+    "electron-builder": "^24.6.4"
+  },
+  "build": {
+    "appId": "com.web-island.tmm-player",
+    "asar": false,
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": true,
+      "allowToChangeInstallationDirectory": true
+    },
+    "icon": "img/icon.png",
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "web-island",
+        "repo": "demon-84",
+        "releaseType": "draft"
+      }
+    ]
+  }
+}
