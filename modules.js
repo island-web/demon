@@ -48,19 +48,34 @@ const get_command = () => {
             //************************************************************************************ */
 
             case 'interval':
-                try {
-                    const interval = JSON.parse(fs.readFileSync(path.join(options)), 'utf-8').adv_interval;
-                    const playlist_interval = interval.filter((obj) => { if (obj.interval_t === comd.message && tempus.between(obj.time_start, obj.time_stop)) { return obj } });
-
-                    if (playlist_interval.length > 0) {
-                        fs.writeFileSync(path.join(manager_command), JSON.stringify({ command: 'player_log', log: 'Підготовка запуску інтервальної реклами' }));
-                        try { fs.writeFileSync(path.join(__dirname, 'eventsController.json'), JSON.stringify({ command: "play_interval", playlist: playlist_interval }, 'utf-8')) }
-                        catch (error) { console.log('57str' + error) }
-                    }
-
-                } catch (error) { console.log('60str' + error) }
-                break;
+                if(optionsPlayerWork.status === 'work'){
+                    try {
+                        const interval = JSON.parse(fs.readFileSync(path.join(options)), 'utf-8').adv_interval;
+                        const playlist_interval = interval.filter((obj) => { if (obj.interval_t === comd.minutes && tempus.between(obj.time_start, obj.time_stop)) { return obj } });
+                            console.log('playlist_interval', playlist_interval);
+                        if (playlist_interval.length > 0) {
+                            fs.writeFileSync(path.join(manager_command), JSON.stringify({ command: 'player_log', log: 'Підготовка запуску інтервальної реклами' }));
+                            try { fs.writeFileSync(path.join(__dirname, 'eventsController.json'), JSON.stringify({ command: "play_interval", playlist: playlist_interval }, 'utf-8')) }
+                            catch (error) { console.log('57str' + error) }
+                        }
+    
+                    } catch (error) { console.log('60str' + error) }
+                }else{
+                    console.log('Поза часом роботи програми');
+                }
+            break;
             //************************************************************************************ */
+            case 'FIX':
+                const fixed_list = JSON.parse(fs.readFileSync(path.join(options)), 'utf-8').adv_fix;
+                const fixed = fixed_list.filter((obj) => { if (obj.fix === comd.time) { return obj } });
+
+                fs.writeFileSync(path.join(manager_command), JSON.stringify({ command: 'player_log', log: 'Підготовка запуску реклами з фіксованим стартом' }));
+                try { fs.writeFileSync(path.join(__dirname, 'eventsController.json'), JSON.stringify({ command: "play_fix", adv: fixed }, 'utf-8')) }
+                catch (error) { console.log('74str' + error) }
+
+
+            brake;
+             //************************************************************************************ */
             case 'info_download_songs':
                 createElement('p', comd.command + '_' + tempus.current_time('mm:ss'), 'p-info-install', info_space, `[ ${tempus.current_time()} ] ===> ${comd.message}`);
                 break;
@@ -77,7 +92,7 @@ const get_command = () => {
             //************************************************************************************ */INTERVAL
             case 'WORK':
                 fs.writeFileSync(path.join(manager_command), JSON.stringify({ command: 'player_log', log: 'Перезавантаження музичного плеєра' }));
-                setTimeout(() => { ipcRenderer.send('reload') }, 5000);
+                setTimeout(() => { ipcRenderer.send('reload') }, 2000);
                 break;
             //************************************************************************************ */
                 case 'update':

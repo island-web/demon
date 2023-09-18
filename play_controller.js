@@ -6,6 +6,7 @@ const chokidar = require('chokidar');
 
 const content = document.getElementById('content');
 const interval = document.getElementById('interval');
+const fixed = document.getElementById('fixed');
 
 
 const __path_content = path.join(os.homedir(), 'demon-84', 'music');
@@ -92,6 +93,14 @@ watcher.on('change', () => {
 
         break;
 
+        case 'play_fix':
+            canPlay = false;
+            fade_out().then(() => { playFixed(data.adv) });
+        break;
+
+
+        default: console.log('default'); break;
+
     }
 });
 
@@ -112,20 +121,21 @@ module.exports.start = async () => {
     const playlist = await actual_programm.playlist;
 
     playContent(playlist);
-    
-
-    
-
-    
-
-
-
-
-
 
 };
 
+module.exports.stopWork = () => {
+    fs.writeFileSync(path.join(manager_command), JSON.stringify({ command: 'player_log', log: 'Зупинка аудіо' }));
+    content.src = '';
+    interval.src = '';
+    fixed.src = '';
+    buffer.length = 0;
+    canPlay = true;
+    content.pause();
+    interval.pause();
+    fixed.pause();
 
+};
 
 
 function playContent(current_playlist){
@@ -170,7 +180,30 @@ function playContent(current_playlist){
 }
 
 
+function playFixed(current_adv) {
 
+    fixed.src = path.join(os.homedir(), 'demon-84', 'adv', current_adv.name_adv);
+    fixed.volume = current_adv.volume / 100;
+    fixed.play();
+    fs.writeFileSync(path.join(manager_command), JSON.stringify({ command: 'player_log_adv', log: 'Старт реклами ( фіксована ): ' + current_adv.name_adv }));
+
+    fixed.onplay = () => {
+        createElement('p', tempus.current_time('mm:ss'), 'p-info-fixed', info_space, `[ ${tempus.current_time()} ] ===> PLAY NOW: ${current_adv.name_adv}`);
+    }
+
+    fixed.onerror = () => {
+        console.log('error');
+        fixed.src = '';
+        canPlay = true;
+        fade_in();
+    }
+
+    fixed.onended = () => {
+        fixed.src = '';
+        canPlay = true;
+        fade_in();
+    }
+}
 
 
 const playInterval = (current_playlist) => {

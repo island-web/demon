@@ -38,6 +38,7 @@ function createWindow() {
   ipcMain.on('show_window', () => { playerWindow.show() });
   ipcMain.on('minimize_window', () => { playerWindow.minimize() });
   ipcMain.on('quit_app', () => { app.quit() });
+  
 
 }
 

@@ -18,7 +18,7 @@ const homedir = os.homedir();
 const __demon_84 = path.join(homedir, 'demon-84');
 const musicPath = path.join(__demon_84, 'music');
 const adv = path.join(__demon_84, 'adv');
-const options = path.join(__demon_84, 'configs', 'options.json');
+//const options = path.join(__demon_84, 'configs', 'options.json');
 const __path_mod = path.join(__demon_84, '.managerDemon_84');
 const manager_command = path.join(__demon_84, ".managerDemon_84", "commands", "manager.json");
 const info_space = document.getElementById('info_space');
@@ -30,11 +30,13 @@ const { printContent } = require('./visual');
 const {
     preparationProgramm, get_command, createElement, check_processes
 } = require('./modules');
-const { start } = require('./play_controller');
+const { start, stopWork } = require('./play_controller');
 
 //VARIABLES
 
-
+const optionsPlayerWork = {
+    status: 'stop',
+};
 
 
 
@@ -53,19 +55,28 @@ check_processes();
 (() => {
     try {
 
-        const opt = JSON.parse(fs.readFileSync(options));
-        const init = JSON.parse(fs.readFileSync(path.join(__demon_84, '.managerDemon_84', 'storage', 'init.json')));
-        if (tempus.between(opt.start_app, opt.stop_app) && init.first_start !== 'init_start') {
-            fs.writeFileSync(path.join(manager_command), JSON.stringify({ command: 'player_log', log: 'Завантаження конфігурації музичної програми' }));
-            preparationProgramm();
+        if(fs.existsSync(path.join(__demon_84, '.managerDemon_84', 'storage', 'options.json'))){
+
+            const options = path.join(__demon_84, 'configs', 'options.json');
+            const opt = JSON.parse(fs.readFileSync(options));
+            console.log(opt.start_app, opt.stop_app);
+            if (tempus.between(opt.start_app, opt.stop_app)) {
+                fs.writeFileSync(path.join(manager_command), JSON.stringify({ command: 'player_log', log: 'Завантаження конфігурації музичної програми' }));
+                optionsPlayerWork.status = 'work';
+                preparationProgramm();
+            }else{
+               
+                fs.writeFileSync(path.join(manager_command), JSON.stringify({ command: 'player_log', log: 'Поза часом роботи програми' }));
+                fs.writeFileSync(path.join(manager_command), JSON.stringify({ command: 'player_log', log: 'Зупинка програми' }));
+                optionsPlayerWork.status = 'stop';
+                stopWork();
+
+            }
         }
 
-
-        document.getElementById("date").innerHTML = tempus.current_date();
-        const clock = setInterval(() => {
-            try { document.getElementById('time').innerHTML = tempus.current_time() }
-            catch (error) { console.log(error); clearInterval(clock) }
-        }, 1000);
+       setTimeout(() => {
+        document.getElementById('time').innerHTML = tempus.current_time() + ' ' + tempus.current_date();
+       }, 1000);
     } catch (error) { throw error }
 
     //save info about player
